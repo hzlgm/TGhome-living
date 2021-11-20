@@ -1,0 +1,75 @@
+<html>
+  <header><link rel="stylesheet" href="style.css" /></header>
+  <header>
+    TG HOME & LIVING
+  </header>
+  <body>
+    <div class="inputs">
+      <div class="inputHolder">
+        <label for="room">Room</label
+        ><input id="room" type="text" placeholder="Room Type" />
+      </div>
+      <div class="inputHolder">
+        <label for="length">Length</label>
+        <input id="length" type="number" placeholder="(inches)" />
+      </div>
+      <div class="inputHolder">
+        <label for="length">Height</label
+        ><input id="width" type="number" placeholder="(inches)" />
+      </div>
+      <div class="inputHolder">
+        <label for="productsDom">Product</label>
+        <select id="productsDom" type="select">
+          <option value="RF1001">Roller Blind</option>
+          <option value="F501">Venetian Blind</option>
+          <option value="Normal">Combi Blind</option>
+    </select>
+      </div>
+    </div>
+
+    <div class="instJobInputs">
+      <div class="inputHolder">
+        <label for="jobCount">How many blinds?</label>
+        <input id="jobCount" type="number" placeholder="number of blinds" />
+      </div>
+    </div>
+    
+    <button onclick="calculation()">Submit</button>
+    <button onclick="resetInputs()">Calculate again!</button>
+    <div><p id="output"></p></div>
+
+    <script>
+      const products = { RF1001: 2.4, F501: 4.2, Normal: 3.2 };
+      const markup = 1.15;
+      const sqFT = 144;
+      const gst = 1.07;
+      let calculation = [];
+      const CostPerBlind = 15;
+      // const area = length * width
+      function calculation()
+      {
+        const length = document.getElementById("length").value;
+        const width = document.getElementById("width").value;
+        const roomType = document.getElementById("room").value;
+        const productSelected = document.getElementById("productsDom").value;
+        const productCost = products[productSelected];
+        const jobCount = document.getElementByID("jobCount").value;
+
+        const area = Math.ceil((length * width) / sqFT);
+        //calculation for cost per blind
+        const totalInstalcost = jobCount * CostPerBlind;
+        const totalCost = area * productCost * gst + totalInstalcost;
+        calculation.push({ room:roomType,cost: totalCost, product: productSelected });
+        document.getElementById("output").innerHTML =
+          roomType + ": $" + Math.ceil(totalCost * 100) / 100;
+        console.log(calculation)
+      }
+      function resetInputs() {
+        document.getElementByID("room").value = null;
+        document.getElementById("length").value = null;
+        document.getElementById("width").value = null;
+        document.getElementById("output").innerHTML = "";
+      }
+    </script>
+  </body>
+</html>
